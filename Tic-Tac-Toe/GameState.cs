@@ -47,5 +47,61 @@ namespace Tic_Tac_Toe
                 CurrentPlayer = Player.X;
             }
         }
+
+        private bool AreSquaresMarked((int, int)[] squares, Player player)
+        {
+            foreach ((int row, int col) in squares)
+            {
+                if (GameGrid[row, col] != player)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool DidMoveWin(int r, int c, out WinInfo winInfo)
+        {
+            (int, int)[] row = new[] {(r, 0), (r, 1), (r, 2)};
+            (int, int)[] col = new[] { (0, c), (1, c), (2, c) };
+            (int, int)[] mainDiagonal = new[] {(0, 0), (1, 1), (2, 2) };
+            (int, int)[] antiDiagonal = new[] { (0, 2), (1, 1), (2, 0) };
+
+            if (AreSquaresMarked(row, CurrentPlayer))
+            {
+                winInfo = new WinInfo { Type = WinType.Row, Number = r };
+                return true;
+            }
+
+            if (AreSquaresMarked(col, CurrentPlayer))
+            {
+                winInfo = new WinInfo { Type = WinType.Column, Number = c };
+                return true;
+            }
+
+            if (AreSquaresMarked(mainDiagonal, CurrentPlayer))
+            {
+                winInfo = new WinInfo { Type = WinType.MainDiagonal };
+                return true;
+            }
+
+            if (AreSquaresMarked(antiDiagonal, CurrentPlayer))
+            {
+                winInfo = new WinInfo { Type = WinType.Antidiagonal };
+                return true;
+            }
+
+            winInfo = null;
+            return false;
+        }
+
+        private bool DidMoveEndTheGame(int r, int c, out GameResult gameResult)
+        {
+            if (DidMoveWin())
+            {
+
+            }
+        }
     }
 }
