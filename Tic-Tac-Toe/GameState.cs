@@ -25,5 +25,27 @@ namespace Tic_Tac_Toe
         public event Action<GameResult> GameEnded;
 
         public event Action GameRestarted;
+
+        private bool CanMakeMove(int row, int col)
+        {
+            return !GameOver && GameGrid[row, col] == Player.None;
+        }
+
+        private bool IsGridFull()
+        {
+            return TurnsPassed == 9;
+        }
+
+        private void SwitchPlayer()
+        {
+            if (CurrentPlayer == Player.X)
+            {
+                CurrentPlayer = Player.O;
+            }
+            else
+            {
+                CurrentPlayer = Player.X;
+            }
+        }
     }
 }
