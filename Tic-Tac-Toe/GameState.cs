@@ -63,9 +63,9 @@ namespace Tic_Tac_Toe
 
         private bool DidMoveWin(int r, int c, out WinInfo winInfo)
         {
-            (int, int)[] row = new[] {(r, 0), (r, 1), (r, 2)};
+            (int, int)[] row = new[] { (r, 0), (r, 1), (r, 2) };
             (int, int)[] col = new[] { (0, c), (1, c), (2, c) };
-            (int, int)[] mainDiagonal = new[] {(0, 0), (1, 1), (2, 2) };
+            (int, int)[] mainDiagonal = new[] { (0, 0), (1, 1), (2, 2) };
             (int, int)[] antiDiagonal = new[] { (0, 2), (1, 1), (2, 0) };
 
             if (AreSquaresMarked(row, CurrentPlayer))
@@ -98,9 +98,42 @@ namespace Tic_Tac_Toe
 
         private bool DidMoveEndTheGame(int r, int c, out GameResult gameResult)
         {
-            if (DidMoveWin())
+            if (DidMoveWin(r, c, out WinInfo winInfo))
             {
+                gameResult = new GameResult { Winner = CurrentPlayer, WinInfo = winInfo };
+                return true;
+            }
 
+            if (IsGridFull())
+            {
+                gameResult = new GameResult { Winner = Player.None };
+                return true;
+            }
+
+            gameResult = null;
+            return false;
+        }
+
+        public void MakeMove(int r, int c)
+        {
+            if (!CanMakeMove(r, c))
+            {
+                return;
+            }
+
+            GameGrid[r, c] = CurrentPlayer;
+            TurnsPassed++;
+
+            if (DidMoveEndTheGame(r, c, out GameResult gameResult))
+            {
+                GameOver = true;
+                MoveMade?.Invoke(r, c);
+                GameEnded?.Invoke(gameResult);
+            }
+            else
+            {
+                SwitchPlayer();
+                MoveMade?.Invoke(r, c);
             }
         }
     }
