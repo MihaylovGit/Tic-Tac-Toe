@@ -1,17 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Tic_Tac_Toe
 {
@@ -33,10 +27,10 @@ namespace Tic_Tac_Toe
 
             gameState.MoveMade += OnMoveMade;
             gameState.GameEnded += OnGameEnded;
-            gameState.GameRestarted += OnGameRestarted; 
+            gameState.GameRestarted += OnGameRestarted;
         }
 
-        private void SetupGameGrid()
+        private void SetupGameGrid() 
         {
             for (int r = 0; r < 3; r++)
             {
@@ -49,17 +43,39 @@ namespace Tic_Tac_Toe
             }
         }
 
+        private void TransitionToEndScreen(string text, ImageSource winnerImage)
+        {
+            TurnPanel.Visibility = Visibility.Hidden;
+            GameCanvas.Visibility = Visibility.Hidden;
+
+            ResultText.Text = text;
+
+            WinnerImage.Source = winnerImage;
+            EndScreen.Visibility = Visibility.Visible;
+        }
+
         private void OnMoveMade(int r, int c)
         {
-
+            Player player = gameState.GameGrid[r, c];
+            imageControls[r, c].Source = imageSources[player];
+            PlayerImage.Source = imageSources[gameState.CurrentPlayer];
         }
 
-        private void OnGameEnded(GameResult gameResult)
+        private async void OnGameEnded(GameResult gameResult)
         {
+            await Task.Delay(1000);
 
+            if (gameResult.Winner == Player.None)
+            {
+                TransitionToEndScreen("It' a tie!", null);
+            }
+            else
+            {
+                TransitionToEndScreen("The Winner is:", imageSources[gameResult.Winner]);
+            }
         }
 
-        private void OnGameRestarted(GameResult gameResult)
+        private void OnGameRestarted()
         {
 
         }
@@ -76,7 +92,7 @@ namespace Tic_Tac_Toe
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+           
         }
     }
 }

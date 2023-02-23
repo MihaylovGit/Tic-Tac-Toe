@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Tic_Tac_Toe"
         mc:Ignorable="d"
-        Title="Tic-Tac-Toe" Height="450" Width="800"
+        Title="Tic-Tac-Toe" Height="850" Width="1654"
         FontFamily="Segoe UI Light"
         Background="{StaticResource BackgroundColor}">
-    <Grid>
+    <Grid Margin="0,-218,-564,-294" HorizontalAlignment="Right" Width="1787">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="413*"/>
             <ColumnDefinition Width="0*"/>
-            <ColumnDefinition Width="185*"/>
-            <ColumnDefinition Width="184*"/>
-            <ColumnDefinition Width="169*"/>
-            <ColumnDefinition Width="155*"/>
-            <ColumnDefinition Width="107*"/>
+            <ColumnDefinition Width="411*"/>
+            <ColumnDefinition Width="378*"/>
+            <ColumnDefinition Width="346*"/>
+            <ColumnDefinition Width="239*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -25,7 +25,7 @@
 
         <StackPanel x:Name="TurnPanel"
                     Orientation="Horizontal"
-                    HorizontalAlignment="Left" Margin="102,0,0,347" Grid.RowSpan="2" Grid.Column="3" Grid.ColumnSpan="2">
+                    HorizontalAlignment="Left" Margin="102,0,0,347" Grid.RowSpan="2" Grid.Column="3" Width="227">
             <TextBlock FontSize="54"
                        Text="Player:"
                        Margin="0,0,0,15"/>
@@ -33,34 +33,27 @@
                    Source="Assets/X15.png"
                    Height="75"/>
         </StackPanel>
+        <Grid x:Name="GameCanvas"
+            Grid.Row="1" Grid.ColumnSpan="3" Margin="65,67,143,67" Grid.Column="3">
 
-        <Canvas x:Name="GameCanvas"
-                Grid.Row="1"
-                Width="300"
-                Height="300" Grid.ColumnSpan="3" Margin="65,67,143,67" Grid.Column="3">
-
-            <UniformGrid x:Name="GameGrid"
-                         Width="300"
-                         Height="300"
-                         Rows="3"
-                         Columns="3"
-                         MouseDown="GameGrid_MouseDown">
-                <UniformGrid.Background>
+            <Grid x:Name="GameGrid"
+                MouseDown="GameGrid_MouseDown" Margin="0,330,627,512" RenderTransformOrigin="0.503,0.534">
+                <Grid.Background>
                     <ImageBrush ImageSource="Assets/Grid.png"/>
-                </UniformGrid.Background>
-            </UniformGrid>
+                </Grid.Background>
+            </Grid>
 
             <Line x:Name="Line"
-                  Stroke="{StaticResource LineColor}"
-                  StrokeThickness="10"
-                  StrokeStartLineCap="Round"
-                  StrokeEndLineCap="Round"
-                  Visibility="Hidden"/>
-        </Canvas>
+                Stroke="{StaticResource LineColor}"
+                StrokeThickness="10"
+                StrokeStartLineCap="Round"
+                StrokeEndLineCap="Round"
+                Visibility="Hidden" Margin="0,0,922,807"/>
+        </Grid>
 
         <Grid x:Name="EndScreen"
               Grid.RowSpan="2"
-              Background="{StaticResource BackgroundColor}" Grid.ColumnSpan="3"
+              Background="{StaticResource BackgroundColor}" Grid.ColumnSpan="2"
               Visibility="Hidden">
             <StackPanel Orientation="Vertical"
                         VerticalAlignment="Center">
